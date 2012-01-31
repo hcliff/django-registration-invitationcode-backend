@@ -9,7 +9,7 @@ from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 
 from registration.views import activate, register
-
+from registration.forms import RegistrationForm
 
 urlpatterns = patterns('',
     url(r'^activate/complete/$', direct_to_template,
@@ -26,7 +26,8 @@ urlpatterns = patterns('',
         name='registration_activate'),
     url(r'^register/$',
         register,
-        {'backend': 'registration.backends.invitation.InvitationBackend'},
+        {'backend': 'registration.backends.invitation.InvitationBackend',
+         'form_class': RegistrationForm},
         name='registration_register'),
 
     url(r'^register/complete/$',

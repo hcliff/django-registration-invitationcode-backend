@@ -7,9 +7,41 @@ Features of backend:
 
 * requires invitation code to proceed,
 * requires TOS (Terms of Service) accepted by user.
+* requires a full name provided by the user
+* requires a ReCaptcha
 
 Invitation codes are useful for e.g. service beta testing.
 Also, since backend is fully compatibile with default backend, when your service is going public and you decide not to use invitation codes, all you need to do is turn "default" backend on.
+
+Mixin all the things
+--------------------
+
+All the forms are mixins, each provides something, construct the form you want from the various mixins.
+
+In your forms.py file:
+
+  from registration.backends.invitation.forms import *
+
+  class RegistrationForm(RegistrationFormFullName, RegistrationFormInvitationCode, RegistrationFormReCaptcha):
+      pass
+      
+This is your form, it requires a valid username (mandatory), a full name, an invitation code and a captcha.
+      
+then in your urls.py file:
+
+    from forms import RegistrationFormSpling
+    from registration.views import register
+    
+    ...
+    snip
+    ...
+
+    url(r'^accounts/register/', register,
+        {'backend': 'registration.backends.invitation.InvitationBackend',
+        'form_class': RegistrationForm},
+        name='registration_register'),
+    (r'^accounts/', include('spling.registration.backends.invitation.urls') ),
+
 
 Installation
 ------------
