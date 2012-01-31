@@ -20,10 +20,10 @@ All the forms are mixins, each provides something, construct the form you want f
 
 In your forms.py file:
 
-  from registration.backends.invitation.forms import *
+    from registration.backends.invitation.forms import *
 
-  class RegistrationForm(RegistrationFormFullName, RegistrationFormInvitationCode, RegistrationFormReCaptcha):
-      pass
+    class RegistrationForm(RegistrationFormFullName, RegistrationFormInvitationCode, RegistrationFormReCaptcha):
+        pass
       
 This is your form, it requires a valid username (mandatory), a full name, an invitation code and a captcha.
       
@@ -31,16 +31,14 @@ then in your urls.py file:
 
     from forms import RegistrationFormSpling
     from registration.views import register
-    
-    ...
-    snip
-    ...
 
-    url(r'^accounts/register/', register,
-        {'backend': 'registration.backends.invitation.InvitationBackend',
-        'form_class': RegistrationForm},
-        name='registration_register'),
-    (r'^accounts/', include('spling.registration.backends.invitation.urls') ),
+    urlpatterns = patterns('',
+        url(r'^accounts/register/', register,
+            {'backend': 'registration.backends.invitation.InvitationBackend',
+            'form_class': RegistrationForm},
+            name='registration_register'),
+        (r'^accounts/', include('spling.registration.backends.invitation.urls') ),
+    )
 
 
 Installation
