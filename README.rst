@@ -18,7 +18,7 @@ Mixin all the things
 
 All the forms are mixins, each provides something, construct the form you want from the various mixins.
 
-In your forms.py file:
+In your forms.py file::
 
     from registration.backends.invitation.forms import *
 
@@ -27,7 +27,8 @@ In your forms.py file:
       
 This is your form, it requires a valid username (mandatory), a full name, an invitation code and a captcha.
       
-then in your urls.py file:
+then in your urls.py file::
+
 
     from forms import RegistrationFormSpling
     from registration.views import register
